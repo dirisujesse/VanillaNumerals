@@ -8,7 +8,7 @@ function handleSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
     let numString = numInput.value || null;
-    if (numString) {
+    if (numString && !isNaN(+numString)) {
         let num = Math.abs(+numString);
         if (num === 0) {
             conversionHolder.innerText = "Zero";
@@ -16,15 +16,22 @@ function handleSubmit(e) {
             convertNum(num, "and", numString.startsWith("-"))
         }
     } else {
-        alert("The provided value appears invalid, provide a valid number to convert")
+        alert("The provided value appears invalid, provide a valid number to convert");
     }
 }
 
-// I must state that this solution I saw at https://ourcodeworld.com/articles/read/353/how-to-convert-numbers-to-words-number-spelling-in-javascript
-// I changed the parseInt call to the + literal
-// I added isSubZero argument to acccount for minus numbers
-// I also changed var declarations to let declarations
+/* 
+    I must state that this solution I saw at https://ourcodeworld.com/articles/read/353/how-to-convert-numbers-to-words-number-spelling-in-javascript
+    I changed the parseInt call to the + literal to catch alphanumeric strings
+    I added isSubZero argument to acccount for minus numbers
+    I also changed var declarations to let declarations
+*/
+
 function convertNum(n, custom_join_character, isSubZero) {
+    if (isNaN(+n)) {
+        alert("The provided value appears invalid, provide a valid number to convert");
+        return;
+    }
     let string = n.toString();
     let units, tens, scales, start, end, chunks, chunksLen, chunk, ints, i, word, words;
 
