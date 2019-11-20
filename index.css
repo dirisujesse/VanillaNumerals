@@ -15,6 +15,7 @@ body {
     position: absolute;
     width: fit-content;
     min-height: fit-content;
+    max-width: 80%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -60,7 +61,7 @@ h2 {
     border: 0px solid transparent;
 }
 
-.result-container {
+#conversion-holder {
     font-size: 1.5rem;
     text-align: center;
 }

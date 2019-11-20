@@ -1,40 +1,59 @@
-let numInput = document.getElementById("num-input");
-let submitBtn = document.getElementById("submit-btn");
-let conversionHolder = document.getElementById("conversion-holder");
-
-submitBtn.addEventListener("click", handleSubmit)
-
-function handleSubmit(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    let numString = numInput.value || null;
-    if (numString && !isNaN(+numString)) {
-        let num = Math.abs(+numString);
-        if (num === 0) {
-            conversionHolder.innerText = "Zero";
+function convertNum(n, custom_join_character) {
+    n = n.toString()
+    let englishPhrase, preDecimal, postDecimal;
+    if (n && +n === 0) {
+        return "Zero";
+    }
+    if (!n || isNaN(+n)) {
+        return "The provided value appears invalid, provide a valid number to convert";
+    }
+    let isSubZero = +n < 0;
+    if (n.includes('.')) {
+        let words = n.split('.');
+        if (+words[1]) {
+            preDecimal = handlePreDecimalNumber(words[0], custom_join_character);
+            postDecimal = handleDecimal(+words[1]);
+            englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal} point ${postDecimal}`;
         } else {
-            convertNum(num, "and", numString.startsWith("-"))
+            preDecimal = handlePreDecimalNumber(words[0], custom_join_character);
+            englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal}`;
         }
     } else {
-        alert("The provided value appears invalid, provide a valid number to convert");
+        preDecimal = handlePreDecimalNumber(n, custom_join_character);
+        englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal}`;
     }
+    return englishPhrase;
+}
+
+function handleDecimal(num) {
+    string = num.toString()
+    let numDict = {
+        "0": "Zero",
+        "1": "One",
+        "2": "Two",
+        "3": "Three",
+        "4": "Four",
+        "5": "Five",
+        "6": "Six",
+        "7": "Seven",
+        "8": "Eight",
+        "9": "Nine",
+    }
+
+    return string.split('').map(wrd => numDict[wrd]).join(' ');
 }
 
 /* 
-    I must state that this solution I saw at https://ourcodeworld.com/articles/read/353/how-to-convert-numbers-to-words-number-spelling-in-javascript
+    I must state that this solution is inspired by https://ourcodeworld.com/articles/read/353/how-to-convert-numbers-to-words-number-spelling-in-javascript
     I changed the parseInt call to the + literal to catch alphanumeric strings
-    I added isSubZero argument to acccount for minus numbers
+    I implemented logic for handling numbers less than zero
+    I implemented logic to handle decimals / floats
+    I also parse the return string to be in title case
     I also changed var declarations to let declarations
 */
 
-function convertNum(n, custom_join_character, isSubZero) {
-    if (isNaN(+n)) {
-        alert("The provided value appears invalid, provide a valid number to convert");
-        return;
-    }
-    let string = n.toString();
+function handlePreDecimalNumber(string, custom_join_character) {
     let units, tens, scales, start, end, chunks, chunksLen, chunk, ints, i, word, words;
-
     let and = custom_join_character || 'and';
     units = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
     tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
@@ -83,6 +102,20 @@ function convertNum(n, custom_join_character, isSubZero) {
 
     }
 
-    let englishPhrase = `${isSubZero ? 'Minus ' : ''}${words.reverse().join(' ')}`;
-    conversionHolder.innerText = englishPhrase.toUpperCase();
+    words = words.map(wrd => {
+        if (wrd !== and) {
+            return wrd.length > 1 ? `${wrd[0].toUpperCase()}${wrd.slice(1)}` : wrd.toString()
+        } else {
+            return wrd;
+        }
+    }).reverse().join(' ');
+    return +string < 100 ? words.replace(custom_join_character, '') : words;
 }
+
+(() => {
+    try {
+        module.exports.convertNum = convertNum;
+    } catch (e) {
+        console.warn("We are in the browser");
+    }
+})()

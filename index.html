@@ -10,16 +10,42 @@
 <body>
     <div class="converter-container">
         <h2>Number Converter</h3>
-        <div class="input-container">
-            <label for="num-input">Enter Number &darr;</label>
-            <input id="num-input" type="number">
-            <button id="submit-btn">convert</button>
-        </div>
-        <div class="result-container">
-            <p id="conversion-holder">English literal will show here</p>
-        </div>
+            <div class="input-container">
+                <label for="num-input">Enter Number &darr;</label>
+                <input id="num-input" type="number">
+                <button id="submit-btn">convert</button>
+            </div>
+            <div class="result-container">
+                <p id="conversion-holder">English literal will show here</p>
+            </div>
     </div>
     <script src="index.js" async defer></script>
+    <script>
+        let numInput = document.getElementById("num-input");
+        let submitBtn = document.getElementById("submit-btn");
+        let conversionHolder = document.getElementById("conversion-holder");
+        let errMessage = "The provided value appears invalid, provide a valid number to convert"
+
+        submitBtn.addEventListener("click", handleSubmit)
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            let numString = numInput.value || null;
+            if (numString && !isNaN(+numString)) {
+                let num = +numString;
+                let englishPhrase = convertNum(num, "and");
+                if (englishPhrase !== errMessage) {
+                    conversionHolder.innerText = englishPhrase;
+                } else {
+                    alert(errMessage);
+                }
+            } else {
+                alert(errMessage);
+                return errMessage;
+            }
+        }
+    </script>
 </body>
 
 </html>

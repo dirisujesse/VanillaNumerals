@@ -4,12 +4,16 @@
   "description": "A Web UI for numeral to english literal conversion",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "jasmine test/spec.js",
+    "init:jasmine": "npx jasmine init"
   },
   "keywords": [
     "Javascript",
     "HTML\\"
   ],
   "author": "Jesse Dirisu",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  }
 }
