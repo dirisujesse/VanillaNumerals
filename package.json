@@ -1,0 +1,15 @@
+{
+  "name": "num_converter",
+  "version": "1.0.0",
+  "description": "A Web UI for numeral to english literal conversion",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "Javascript",
+    "HTML\\"
+  ],
+  "author": "Jesse Dirisu",
+  "license": "MIT"
+}
