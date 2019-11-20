@@ -1,3 +1,12 @@
+/* 
+    I must state that this solution is inspired by https://ourcodeworld.com/articles/read/353/how-to-convert-numbers-to-words-number-spelling-in-javascript
+    I changed the parseInt call to the + literal to catch alphanumeric strings
+    I implemented logic for handling numbers less than zero
+    I implemented logic to handle decimals / floats
+    I also parse the return string to be in title case
+    I also changed var declarations to let declarations
+*/
+
 function convertNum(n, custom_join_character) {
     n = n.toString()
     let englishPhrase, preDecimal, postDecimal;
@@ -12,7 +21,7 @@ function convertNum(n, custom_join_character) {
         let words = n.split('.');
         if (+words[1]) {
             preDecimal = handlePreDecimalNumber(words[0], custom_join_character);
-            postDecimal = handleDecimal(+words[1]);
+            postDecimal = handleDecimal(words[1]);
             englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal} point ${postDecimal}`;
         } else {
             preDecimal = handlePreDecimalNumber(words[0], custom_join_character);
@@ -25,8 +34,7 @@ function convertNum(n, custom_join_character) {
     return englishPhrase;
 }
 
-function handleDecimal(num) {
-    string = num.toString()
+function handleDecimal(string) {
     let numDict = {
         "0": "Zero",
         "1": "One",
@@ -42,15 +50,6 @@ function handleDecimal(num) {
 
     return string.split('').map(wrd => numDict[wrd]).join(' ');
 }
-
-/* 
-    I must state that this solution is inspired by https://ourcodeworld.com/articles/read/353/how-to-convert-numbers-to-words-number-spelling-in-javascript
-    I changed the parseInt call to the + literal to catch alphanumeric strings
-    I implemented logic for handling numbers less than zero
-    I implemented logic to handle decimals / floats
-    I also parse the return string to be in title case
-    I also changed var declarations to let declarations
-*/
 
 function handlePreDecimalNumber(string, custom_join_character) {
     let units, tens, scales, start, end, chunks, chunksLen, chunk, ints, i, word, words;

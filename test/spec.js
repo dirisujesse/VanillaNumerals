@@ -37,6 +37,7 @@ describe("Number Conversion Test", () => {
             converter.convertNum("-20.001", "and"),
             converter.convertNum("100.222", "and"),
             converter.convertNum(200.102, "and"),
+            converter.convertNum(200.002, "and"),
         ];
         let isAllErrorMessage = results.every(it => it.toUpperCase().includes("POINT"));
         expect(isAllErrorMessage).toBe(true)
