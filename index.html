@@ -34,7 +34,7 @@
             let numString = numInput.value || null;
             if (numString && !isNaN(+numString)) {
                 let num = +numString;
-                let englishPhrase = convertNum(num, "and");
+                let englishPhrase = convertNum(num);
                 if (englishPhrase !== errMessage) {
                     conversionHolder.innerText = englishPhrase;
                 } else {
