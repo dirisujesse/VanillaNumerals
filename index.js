@@ -20,7 +20,11 @@ let numDict = {
 }
 
 function convertNum(n) {
-    n = n.toString()
+    // var upperLimit = 2 ** 53 - 1;
+    if (!Number.isSafeInteger(n)) {
+        alert("This is a pretty large number, don't expect much accuracy as our engine is not used to handling such massive figures")
+    }
+    n = BigInt(n).toString()
     let englishPhrase, preDecimal, postDecimal;
     if (n && +n === 0) {
         return "Zero";
@@ -55,7 +59,10 @@ function convertPreDecimalNumber(strng) {
     if (!+strng) {
         return '';
     }
-    const numString = `${+strng}`;
+    // I parse strng as BigInt to handle numbers beyond native JS Number range
+    // Accuracy is lost as JS cannot handle very large numbers
+    strng = BigInt(+strng).toString()
+    const numString = strng;
     const lenNum = numString.length;
     if (lenNum === 1 || +numString <= 19) {
         return units[+numString];
