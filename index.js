@@ -20,11 +20,13 @@ let numDict = {
 }
 
 function convertNum(n) {
-    // var upperLimit = 2 ** 53 - 1;
-    if (!Number.isSafeInteger(n)) {
+    var upperLimit = 2 ** 53 - 1;
+    var isUnsafe = false;
+    if (n > upperLimit)) {
+        isUnsafe = true
         alert("This is a pretty large number, don't expect much accuracy as our engine is not used to handling such massive figures")
     }
-    n = Number.isSafeInteger(n) ? n.toString() : BigInt(n).toString();
+    n = !isUnsafe ? n.toString() : BigInt(n).toString();
     let englishPhrase, preDecimal, postDecimal;
     if (n && +n === 0) {
         return "Zero";
