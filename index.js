@@ -60,7 +60,7 @@ function convertPreDecimalNumber(strng) {
     if (!+strng) {
         return '';
     }
-    const numString = +strng.toString();
+    const numString = `${+strng}`;
     const lenNum = numString.length;
     if (lenNum === 1 || +numString <= 19) {
         return units[+numString];
