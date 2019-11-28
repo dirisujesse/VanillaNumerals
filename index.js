@@ -22,7 +22,7 @@ let numDict = {
 function convertNum(n) {
     var upperLimit = 2 ** 53 - 1;
     var isUnsafe = false;
-    if (n > upperLimit)) {
+    if (n > upperLimit) {
         isUnsafe = true
         alert("This is a pretty large number, don't expect much accuracy as our engine is not used to handling such massive figures")
     }
