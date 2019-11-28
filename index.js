@@ -29,12 +29,7 @@ function convertNum(n) {
         return "The provided value appears invalid, provide a valid number to convert";
     }
     let isSubZero = n.startsWith('-');
-    console.log({
-        isSubZero,
-        n
-    });
     n = isSubZero ? n.slice(1) : n;
-    console.log(n)
     if (n.includes('.')) {
         let words = n.split('.');
         if (+words[1]) {
