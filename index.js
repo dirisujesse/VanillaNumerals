@@ -123,7 +123,7 @@ function convertPreDecimalNumber(strng) {
 function handleThanHundredNums(numString, lenNum, scale, numRange) {
     const [minuend, startrange, midrange, _] = [numRange[0] - 1, ...numRange]
     const [H, T] = [lenNum === startrange ? units[numString[0]] : lenNum === midrange ? convertPreDecimalNumber(numString.slice(0, 2)) : convertPreDecimalNumber(numString.slice(0, 3)), +numString.slice(lenNum - minuend)];
-    const tailString = T ? `${T >= 100 ? '' : 'and'} ${convertPreDecimalNumber(T.toString())}`.trim() || '';
+    const tailString = T ? `${T >= 100 ? '' : 'and'} ${convertPreDecimalNumber(T.toString())}`.trim() : '';
     return `${H} ${scale} ${tailString}`.trim()
 }
 
