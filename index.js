@@ -40,14 +40,14 @@ function convertNum(n) {
         if (+words[1]) {
             preDecimal = convertPreDecimalNumber(words[0]);
             postDecimal = handleDecimal(words[1]);
-            englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal} point ${postDecimal}`;
+            englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal || 'Zero'} point ${postDecimal}`;
         } else {
             preDecimal = convertPreDecimalNumber(words[0]);
-            englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal}`;
+            englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal || 'Zero'}`;
         }
     } else {
         preDecimal = convertPreDecimalNumber(n);
-        englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal}`;
+        englishPhrase = `${isSubZero ? 'Minus ' : ''}${preDecimal || 'Zero'}`;
     }
     return englishPhrase;
 }
@@ -56,10 +56,11 @@ function handleDecimal(string) {
     return string.split('').map(wrd => numDict[wrd]).join(' ');
 }
 
-function convertPreDecimalNumber(numString) {
-    if (!+numString) {
+function convertPreDecimalNumber(strng) {
+    if (!+strng) {
         return '';
     }
+    const numString = +strng.toString();
     const lenNum = numString.length;
     if (lenNum === 1 || +numString <= 19) {
         return units[+numString];
@@ -122,7 +123,7 @@ function convertPreDecimalNumber(numString) {
 function handleThanHundredNums(numString, lenNum, scale, numRange) {
     const [minuend, startrange, midrange, _] = [numRange[0] - 1, ...numRange]
     const [H, T] = [lenNum === startrange ? units[numString[0]] : lenNum === midrange ? convertPreDecimalNumber(numString.slice(0, 2)) : convertPreDecimalNumber(numString.slice(0, 3)), +numString.slice(lenNum - minuend)];
-    const tailString = `${T === 0 || T >= 100 ? '' : 'and'} ${convertPreDecimalNumber(T.toString())}`.trim();
+    const tailString = T ? `${T >= 100 ? '' : 'and'} ${convertPreDecimalNumber(T.toString())}`.trim() || '';
     return `${H} ${scale} ${tailString}`.trim()
 }
 
