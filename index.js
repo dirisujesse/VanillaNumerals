@@ -24,7 +24,7 @@ function convertNum(n) {
     if (!Number.isSafeInteger(n)) {
         alert("This is a pretty large number, don't expect much accuracy as our engine is not used to handling such massive figures")
     }
-    n = BigInt(n).toString()
+    n = Number.isSafeInteger(n) ? n.toString() : BigInt(n).toString();
     let englishPhrase, preDecimal, postDecimal;
     if (n && +n === 0) {
         return "Zero";
