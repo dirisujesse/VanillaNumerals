@@ -33,8 +33,7 @@
             e.stopPropagation();
             let numString = numInput.value || null;
             if (numString && !isNaN(+numString)) {
-                let num = +numString;
-                let englishPhrase = convertNum(num);
+                let englishPhrase = convertNum(numString);
                 if (englishPhrase !== errMessage) {
                     conversionHolder.innerText = englishPhrase;
                 } else {
